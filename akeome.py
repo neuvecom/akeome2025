@@ -53,7 +53,7 @@ def draw():
     pyxel.text(11, 24, "|", 7)
     pyxel.text(6, 32, "LET'S MOVE CAT HERE!", 7)
     pyxel.text(84, 55, "2025.01.01", 8)
-    pyxel.text(1, 55, str(x) + ':' + str(y) +  ':' + str(tutu_x) + ':' + str(tutu_y) + ':' + str(tutu_status), 7)
+    # pyxel.text(1, 55, str(x) + ':' + str(y) +  ':' + str(tutu_x) + ':' + str(tutu_y) + ':' + str(tutu_status), 7)
 
     pyxel.blt(x, y, 0, 0, 0, 16, 16)
 
