@@ -6,18 +6,32 @@ pyxel.load("my_resource.pyxres")
 
 x = 0
 y = 0
-status = 0
-tutu_status = 0
+status = False
+tutu_status = False
+score = 0
+
+tutu_x = random.randint(9, 112)
+tutu_y = random.randint(9, 48)
 
 pyxel.playm(1, loop=True)
 
-tutu_x = random.randint(1, 112)
-tutu_y = random.randint(1, 48)
+isSound = True
+isHelp = False
+isScore = False
 
+# デバッグ用情報をコンソールに出力
 print('BINGO is ' + str(tutu_x) + ':' + str(tutu_y))
 
+def set_spawn():
+    global tutu_x,tutu_y
+
+    tutu_x = random.randint(9, 112)
+    tutu_y = random.randint(9, 48)
+
+    print('next BINGO is ' + str(tutu_x) + ':' + str(tutu_y))
+
 def update():
-    global x,y,status,tutu_x,tutu_y,tutu_status
+    global x,y,status,tutu_x,tutu_y,tutu_status,isSound,isHelp,isScore,score
 
     # 座標の修正
     if pyxel.mouse_x < 0:
@@ -34,15 +48,34 @@ def update():
     else:
         y = pyxel.mouse_y
 
+    # 当たり判定
     if x == 5 and y == 5:
-        status = 1
+        status = True
     else:
-        status = 0
+        status = False
 
     if x == tutu_x and y == tutu_y:
-        tutu_status = 1
+        tutu_status = True
+        if score < 1000:
+            score = score + 1
+        else:
+            score = 0
     else:
-        tutu_status = 0
+        tutu_status = False
+
+    # モードの切り替え
+    if pyxel.btnp(pyxel.KEY_SPACE):
+        isSound = not isSound
+        if isSound:
+            pyxel.playm(1, loop=True)
+        else:
+            pyxel.stop()
+
+    if pyxel.btnp(pyxel.KEY_H):
+        isHelp = not isHelp
+
+    if pyxel.btnp(pyxel.KEY_S):
+        isScore = not isScore
 
     return
 
@@ -51,18 +84,27 @@ def draw():
     pyxel.blt(5, 5, 1, 0, 0, 16, 16) 
     pyxel.text(11, 22, "^", 7)
     pyxel.text(11, 24, "|", 7)
-    pyxel.text(6, 32, "LET'S MOVE CAT HERE!", 7)
-    pyxel.text(84, 55, "2025.01.01", 8)
-    # pyxel.text(1, 55, str(x) + ':' + str(y) +  ':' + str(tutu_x) + ':' + str(tutu_y) + ':' + str(tutu_status), 7)
 
     pyxel.blt(x, y, 0, 0, 0, 16, 16)
 
-    if status == 1:
+    pyxel.text(6, 32, "LET'S MOVE CAT HERE!", 7)
+    pyxel.text(84, 55, "2025.01.01", 8)
+
+    pyxel.text(tutu_x + 10, tutu_y + 6, ".", 5)
+
+    if status:
         # pyxel.play(0, 38)
         pyxel.text(30, 12, "A HAPPY NEW YEAR!", 9)
 
-    if tutu_status == 1:
-        pyxel.text(30, 12, "BINGO!", 9)
+    if tutu_status:
+        pyxel.text(30, 12, "DELICIOUS!", 9)
+        set_spawn()
+
+    if isScore:
+        pyxel.text(84, 2, 'SCORE: ' + str(score), 13)
+
+    if isHelp:
+        pyxel.text(1, 55, str(x) + ':' + str(y) +  ':' + str(tutu_x) + ':' + str(tutu_y) + ':' + str(tutu_status), 13)
 
     return
 
