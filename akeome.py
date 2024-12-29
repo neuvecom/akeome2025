@@ -87,10 +87,12 @@ def draw():
 
     pyxel.blt(x, y, 0, 0, 0, 16, 16)
 
-    pyxel.text(6, 32, "LET'S MOVE CAT HERE!", 7)
+    pyxel.text(6, 32, "LET'S      CAT", 7)
     pyxel.text(84, 55, "2025.01.01", 8)
 
     pyxel.text(tutu_x + 10, tutu_y + 6, ".", 5)
+
+    pyxel.text(6, 32, "      MOVE     HERE!", 7)
 
     if status:
         # pyxel.play(0, 38)
