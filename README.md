@@ -11,14 +11,14 @@ PC（Mac）での実行を想定しています。
 
 ## メモ
 - エディタを開く `uv run pyxel edit`  
-- 起動する `uv run pyxel run akeome.py`
-  - 自動更新で起動 `uv run pyxel watch . akeome.py`
-- pyxapp化 `uv run pyxel package . akeome.py`
+- 起動する `uv run pyxel run ./Akeome2025/akeome.py`
+  - 自動更新で起動 `uv run pyxel watch ./Akeome2025 ./Akeome2025/akeome**.py`
+- pyxapp化 `uv run pyxel package . akeome.py` <= `cd Akeome2025`
   - 実行前に不要なファイルは削除（古いHTMLやpyxappなど）
-- html出力 `uv run pyxel app2html akeome2025.pyxapp`
+- html出力 `uv run pyxel app2html Akeome2025.pyxapp` <= `cd Akeome2025`
   - 出力後にファイル名をindex.htmlに変更
+- pyxapp化後、アプリを起動 `uv run pyxel play Akeome2025.pyxapp` <= `cd Akeome2025`
 - ビルドスクリプト起動 `zsh build.sh`
-- アプリを起動 `uv run pyxel play ./Akeome2025/Akeome2025.pyxapp`
 
 ## 環境構築
 - `uv sync` Githubからダウンロードした場合
