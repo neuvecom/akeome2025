@@ -97,27 +97,27 @@ def update():
     else:
         tutu_status = False
     # モードの切り替え（サウンドのオンオフ）
-    if pyxel.btnp(pyxel.KEY_SPACE):
+    if pyxel.btnp(pyxel.KEY_SPACE) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_A):
         isSound = not isSound
         if isSound:
             pyxel.playm(1, loop=True)
         else:
             pyxel.stop()
     # モードの切り替え（デバック情報のオンオフ）
-    if pyxel.btnp(pyxel.KEY_Y) or pyxel.btnp(pyxel.KEY_H):
+    if pyxel.btnp(pyxel.KEY_Y) or pyxel.btnp(pyxel.KEY_H) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_Y):
         isHelp = not isHelp
     # モードの切り替え（スコアのオンオフ）
-    if pyxel.btnp(pyxel.KEY_X):
+    if pyxel.btnp(pyxel.KEY_X) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_X):
         isScore = not isScore
 
     # ゲームパッド対応＆キー操作対応
-    if pyxel.btn(pyxel.KEY_W) or pyxel.btn(pyxel.KEY_UP):
+    if pyxel.btn(pyxel.KEY_W) or pyxel.btn(pyxel.KEY_UP) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_DPAD_UP):
         y = y - 1
-    if pyxel.btn(pyxel.KEY_S) or pyxel.btn(pyxel.KEY_DOWN):
+    if pyxel.btn(pyxel.KEY_S) or pyxel.btn(pyxel.KEY_DOWN) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_DPAD_DOWN):
         y = y + 1
-    if pyxel.btn(pyxel.KEY_A) or pyxel.btn(pyxel.KEY_LEFT):
+    if pyxel.btn(pyxel.KEY_A) or pyxel.btn(pyxel.KEY_LEFT) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_DPAD_LEFT):
         x = x - 1
-    if pyxel.btn(pyxel.KEY_D) or pyxel.btn(pyxel.KEY_RIGHT):
+    if pyxel.btn(pyxel.KEY_D) or pyxel.btn(pyxel.KEY_RIGHT) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_DPAD_RIGHT):
         x = x + 1
 
     return
