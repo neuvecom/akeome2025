@@ -68,20 +68,6 @@ def set_spawn():
 def update():
     global x,y,status,tutu_x,tutu_y,tutu_status,isSound,isHelp,isScore,score
 
-    # 座標の修正（X座標）
-    # if pyxel.mouse_x < 0:
-    #     x = 0
-    # elif pyxel.mouse_x > 112:
-    #     x = 112
-    # else:
-    #     x = pyxel.mouse_x
-    # # 座標の修正（Y座標）
-    # if pyxel.mouse_y < 0:
-    #     y = 0
-    # elif pyxel.mouse_y > 48:
-    #     y = 48
-    # else:
-    #     y = pyxel.mouse_y
     # 当たり判定（ゴール）
     if x == 5 and y == 5:
         status = True
@@ -119,6 +105,20 @@ def update():
         x = x - 1
     if pyxel.btn(pyxel.KEY_D) or pyxel.btn(pyxel.KEY_RIGHT) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_DPAD_RIGHT):
         x = x + 1
+    # 座標の修正（X座標）
+    if x < 0:
+        x = 0
+    elif x > 112:
+        x = 112
+    else:
+        x = x
+    # 座標の修正（Y座標）
+    if y < 0:
+        y = 0
+    elif y > 48:
+        y = 48
+    else:
+        y = y
 
     return
 
