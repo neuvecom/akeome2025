@@ -56,6 +56,11 @@ isAuto = False
 # デバッグ用情報をコンソールに出力
 print('BINGO is ' + str(tutu_x).zfill(3) + ':' + str(tutu_y).zfill(3))
 
+# 背景追加アイテムの出現ポイントの決定
+item_point = [[10,41],[37,41],[61,41],[105,8]]
+random.shuffle(item_point)
+print(item_point)
+
 # カスタム関数
 def set_spawn():
     global tutu_x,tutu_y
@@ -146,8 +151,20 @@ def update():
 
 # Pyxelの関数（描画）
 def draw():
+
     # 画面構築（ベース下）
     pyxel.cls(1) # 画面のクリア
+
+    # 背景にアイテム追加
+    if score > 200:
+        pyxel.blt(item_point[0][0], item_point[0][1], 2, 0, 0, 16, 16, 1)
+    if score > 400:
+        pyxel.blt(item_point[1][0], item_point[1][1], 2, 16, 0, 16, 16, 1)
+    if score > 600:
+        pyxel.blt(item_point[2][0], item_point[2][1], 2, 32, 0, 16, 16, 1)
+    if score > 800:
+        pyxel.blt(item_point[3][0], item_point[3][1], 2, 48, 0, 16, 16, 1)
+
     pyxel.blt(5, 5, 1, 0, 0, 16, 16) # ゴールの描画
     pyxel.text(11, 22, "^", 7)
     pyxel.text(11, 24, "|", 7)
