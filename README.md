@@ -4,6 +4,11 @@ for New Year's Greetings.
 - [デモ](https://neuvecom.github.io/akeome2025/)
 - [解説記事](https://zenn.dev/neuvecom/articles/0ab7a54b5f2d97)
 
+## はじめに
+このリポジトリは、上記リンクのあけおめ記事のソースコードです。  
+PC（Mac）での実行を想定しています。  
+アプリの書き出しやスマホ端末の対応は気が向いたらするかも。
+
 ## メモ
 - エディタを開く `uv run pyxel edit`  
 - 起動する `uv run pyxel run akeome.py`
@@ -13,6 +18,7 @@ for New Year's Greetings.
 - html出力 `uv run pyxel app2html akeome2025.pyxapp`
   - 出力後にファイル名をindex.htmlに変更
 - ビルドスクリプト起動 `zsh build.sh`
+- アプリを起動 `uv run pyxel play ./Akeome2025/Akeome2025.pyxapp`
 
 ## 環境構築
 - `uv sync` Githubからダウンロードした場合
