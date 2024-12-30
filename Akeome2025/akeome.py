@@ -35,7 +35,7 @@ x_max = 128
 y_max = 64
 safe_ajst = 14
 x = 5
-y = 35
+y = 40
 status = False
 tutu_status = False
 score = 0
@@ -51,6 +51,7 @@ pyxel.playm(1, loop=True)
 isSound = True
 isHelp = False
 isScore = False
+isAuto = False
 
 # デバッグ用情報をコンソールに出力
 print('BINGO is ' + str(tutu_x).zfill(3) + ':' + str(tutu_y).zfill(3))
@@ -64,9 +65,24 @@ def set_spawn():
 
     print('next BINGO is ' + str(tutu_x).zfill(3) + ':' + str(tutu_y).zfill(3) + ' / Score: ' + str(score).zfill(3))
 
+def auto_drive():
+    global x,y,tutu_x,tutu_y
+
+    axus = random.randint(0, 1)
+    if axus:
+        if x > tutu_x:
+            x = x - 1
+        else:
+            x = x + 1
+    else:
+        if y > tutu_y:
+            y = y - 1
+        else:
+            y = y + 1
+
 # Pyxelの関数（更新）
 def update():
-    global x,y,status,tutu_x,tutu_y,tutu_status,isSound,isHelp,isScore,score
+    global x,y,status,tutu_x,tutu_y,tutu_status,isSound,isHelp,isScore,score,isAuto
 
     # 当たり判定（ゴール）
     if x == 5 and y == 5:
@@ -83,7 +99,7 @@ def update():
     else:
         tutu_status = False
     # モードの切り替え（サウンドのオンオフ）
-    if pyxel.btnp(pyxel.KEY_SPACE) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_A):
+    if pyxel.btnp(pyxel.KEY_SPACE) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_B):
         isSound = not isSound
         if isSound:
             pyxel.playm(1, loop=True)
@@ -95,16 +111,22 @@ def update():
     # モードの切り替え（スコアのオンオフ）
     if pyxel.btnp(pyxel.KEY_X) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_X):
         isScore = not isScore
+    # モードの切り替え（自動プレイ）
+    if pyxel.btnp(pyxel.KEY_P) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_A):
+        isAuto = not isAuto
 
-    # ゲームパッド対応＆キー操作対応
-    if pyxel.btn(pyxel.KEY_W) or pyxel.btn(pyxel.KEY_UP) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_DPAD_UP):
-        y = y - 1
-    if pyxel.btn(pyxel.KEY_S) or pyxel.btn(pyxel.KEY_DOWN) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_DPAD_DOWN):
-        y = y + 1
-    if pyxel.btn(pyxel.KEY_A) or pyxel.btn(pyxel.KEY_LEFT) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_DPAD_LEFT):
-        x = x - 1
-    if pyxel.btn(pyxel.KEY_D) or pyxel.btn(pyxel.KEY_RIGHT) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_DPAD_RIGHT):
-        x = x + 1
+    if isAuto:
+        auto_drive()
+    else:
+        # ゲームパッド対応＆キー操作対応
+        if pyxel.btn(pyxel.KEY_W) or pyxel.btn(pyxel.KEY_UP) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_DPAD_UP):
+            y = y - 1
+        if pyxel.btn(pyxel.KEY_S) or pyxel.btn(pyxel.KEY_DOWN) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_DPAD_DOWN):
+            y = y + 1
+        if pyxel.btn(pyxel.KEY_A) or pyxel.btn(pyxel.KEY_LEFT) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_DPAD_LEFT):
+            x = x - 1
+        if pyxel.btn(pyxel.KEY_D) or pyxel.btn(pyxel.KEY_RIGHT) or pyxel.btn(pyxel.GAMEPAD1_BUTTON_DPAD_RIGHT):
+            x = x + 1
     # 座標の修正（X座標）
     if x < 0:
         x = 0
@@ -150,6 +172,9 @@ def draw():
     # 画面構築（デバック情報オン・オフ）
     if isHelp:
         pyxel.text(1, 55, str(x) + ':' + str(y) +  ':' + str(tutu_x) + ':' + str(tutu_y), 13)
+    # 画面構築（自動プレイ）
+    if isAuto:
+        pyxel.text(81, 55, '.', 10)
     # 画面構築（餌）
     pyxel.text(tutu_x + 10, tutu_y + 6, ".", 4)
 
