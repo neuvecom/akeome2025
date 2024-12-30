@@ -1,0 +1,10 @@
+[project]
+name = "akeome2025"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pyxel>=2.2.10",
+    "ruff>=0.8.4",
+]
