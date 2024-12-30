@@ -230,11 +230,11 @@ def draw():
             set_spawn()
         # 画面構築（スコアオン・オフ）
         if isScore:
-            pyxel.text(84, 2, 'SCORE: ' + str(score).zfill(3), 13)
+            pyxel.text(84, 2, 'SCORE: ' + str(score).zfill(3), 7)
         # 画面構築（デバック情報オン・オフ）
         if isHelp:
-            pyxel.text(1, 46, str(deli_timer) + ':' + str(happy_timer), 13)
-            pyxel.text(1, 55, str(x) + ':' + str(y) +  ':' + str(tutu_x) + ':' + str(tutu_y), 13)
+            pyxel.text(1, 46, str(deli_timer) + ':' + str(happy_timer), 7)
+            pyxel.text(1, 55, str(x) + ':' + str(y) +  ':' + str(tutu_x) + ':' + str(tutu_y), 7)
         # 画面構築（自動プレイ）
         if isAuto:
             pyxel.text(81, 55, '.', 10)
