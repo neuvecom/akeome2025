@@ -34,8 +34,8 @@ my_resource = 'my_resource.pyxres'
 x_max = 128
 y_max = 64
 safe_ajst = 14
-x = 0
-y = 0
+x = 5
+y = 35
 status = False
 tutu_status = False
 score = 0
@@ -69,19 +69,19 @@ def update():
     global x,y,status,tutu_x,tutu_y,tutu_status,isSound,isHelp,isScore,score
 
     # 座標の修正（X座標）
-    if pyxel.mouse_x < 0:
-        x = 0
-    elif pyxel.mouse_x > 112:
-        x = 112
-    else:
-        x = pyxel.mouse_x
-    # 座標の修正（Y座標）
-    if pyxel.mouse_y < 0:
-        y = 0
-    elif pyxel.mouse_y > 48:
-        y = 48
-    else:
-        y = pyxel.mouse_y
+    # if pyxel.mouse_x < 0:
+    #     x = 0
+    # elif pyxel.mouse_x > 112:
+    #     x = 112
+    # else:
+    #     x = pyxel.mouse_x
+    # # 座標の修正（Y座標）
+    # if pyxel.mouse_y < 0:
+    #     y = 0
+    # elif pyxel.mouse_y > 48:
+    #     y = 48
+    # else:
+    #     y = pyxel.mouse_y
     # 当たり判定（ゴール）
     if x == 5 and y == 5:
         status = True
@@ -104,11 +104,21 @@ def update():
         else:
             pyxel.stop()
     # モードの切り替え（デバック情報のオンオフ）
-    if pyxel.btnp(pyxel.KEY_H):
+    if pyxel.btnp(pyxel.KEY_Y) or pyxel.btnp(pyxel.KEY_H):
         isHelp = not isHelp
     # モードの切り替え（スコアのオンオフ）
-    if pyxel.btnp(pyxel.KEY_S):
+    if pyxel.btnp(pyxel.KEY_X):
         isScore = not isScore
+
+    # ゲームパッド対応＆キー操作対応
+    if pyxel.btn(pyxel.KEY_W) or pyxel.btn(pyxel.KEY_UP):
+        y = y - 1
+    if pyxel.btn(pyxel.KEY_S) or pyxel.btn(pyxel.KEY_DOWN):
+        y = y + 1
+    if pyxel.btn(pyxel.KEY_A) or pyxel.btn(pyxel.KEY_LEFT):
+        x = x - 1
+    if pyxel.btn(pyxel.KEY_D) or pyxel.btn(pyxel.KEY_RIGHT):
+        x = x + 1
 
     return
 
