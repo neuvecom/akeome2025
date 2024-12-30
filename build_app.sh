@@ -1,12 +1,16 @@
 #!/bin/zsh
 
+rm -R Akeome2025_app
+rm -R ./misc/Akeome2025.app
+
+mkdir Akeome2025_app
 cd Akeome2025_app
 pwd
-rm -R build
-rm -R Akeome2025.app
-rm Akeome2025.pyxapp
-rm Akeome2025
-rm -R ../misc/Akeome2025.app
+# rm -R build
+# rm -R Akeome2025.app
+# rm Akeome2025.pyxapp
+# rm Akeome2025
+# rm -R ../misc/Akeome2025.app
 
 cp ../Akeome2025/Akeome2025.pyxapp .
 
