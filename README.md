@@ -9,6 +9,8 @@ for New Year's Greetings.
 Macでの実行を想定しています（Windowsでの検証はできてません）。  
 アプリの書き出しやスマホ端末の対応は未検証でテスト中ですので参考程度に。
 
+> 記事のソースはzennディレクトリにあります
+
 ## メモ
 - エディタを開く `uv run pyxel edit`  
 - 起動する `uv run pyxel run ./Akeome2025/akeome.py`
