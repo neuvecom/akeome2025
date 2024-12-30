@@ -97,7 +97,7 @@ def auto_drive():
 # Pyxelの関数（更新）
 def update():
     global x,y,status,tutu_x,tutu_y,tutu_status
-    global isSound,isHelp,isScore,isAuto
+    global isSound,isHelp,isScore,isAuto,isClear
     global score,deli_timer,happy_timer,clear_cnt
     global clear_cat_ajst
 
@@ -111,16 +111,14 @@ def update():
     # 当たり判定（餌）
     if x == tutu_x and y == tutu_y:
         tutu_status = True
+        happy_timer = 0
+        deli_timer = int(time_val / 3)
+        score = score + 10
         if score < 500:
-            score = score + 1
-            happy_timer = 0
-            deli_timer = int(time_val / 3)
             if clear_cnt > 3:
                 clear_cnt = 0
             else:
                 clear_cnt = clear_cnt + 1
-        else:
-            isClear = True
     else:
         tutu_status = False
     # モードの切り替え（サウンドのオンオフ）
@@ -179,67 +177,78 @@ def update():
     else:
         clear_cat_ajst = clear_cat_ajst + 1
 
+    if score > 499:
+        isClear = True
+        game_clear()
+
+def game_clear():
+    pyxel.cls(1) # 画面のクリア
+    pyxel.text(10, 5, "THANK YOU FOR YOUR PLAYING.", 7)
+    pyxel.text(6, 16, "BEST WISHES FOR THE NEW YEAR!!", 0)
+    pyxel.text(5, 15, "BEST WISHES FOR THE NEW YEAR!!", 9)
+    pyxel.blt(58 + clear_cat_ajst, 23, 0, 0, 0, 16, 16, 1)
+    pyxel.blt(24, 44, 2, 0, 0, 16, 16, 1)
+    pyxel.blt(44, 44, 2, 16, 0, 16, 16, 1)
+    pyxel.blt(64, 44, 2, 32, 0, 16, 16, 1)
+    pyxel.blt(84, 44, 2, 48, 0, 16, 16, 1)
+
+def play_game():
+    # 画面構築
+    pyxel.cls(bgcolor_list[clear_cnt]) # 画面のクリア
+    # 背景にアイテム追加
+    if score > 100:
+        pyxel.blt(item_point[0][0], item_point[0][1], 2, 0, 0, 16, 16, 1)
+    if score > 200:
+        pyxel.blt(item_point[1][0], item_point[1][1], 2, 16, 0, 16, 16, 1)
+    if score > 300:
+        pyxel.blt(item_point[2][0], item_point[2][1], 2, 32, 0, 16, 16, 1)
+    if score > 400:
+        pyxel.blt(item_point[3][0], item_point[3][1], 2, 48, 0, 16, 16, 1)
+    # ゴールの描画
+    pyxel.blt(5, 5, 1, 0, 0, 16, 16, 0) 
+    # 背景文字の描画（猫より後）
+    pyxel.text(11, 22, "^", 7)
+    pyxel.text(11, 24, "|", 7)
+    pyxel.text(6, 32, "LET'S      CAT", 7)
+    # 画面構築（猫）
+    pyxel.blt(x, y, 0, 0, 0, 16, 16, 1)
+    # 背景文字の描画（猫より前）
+    pyxel.text(6, 32, "      MOVE     HERE!", 7)
+    pyxel.text(84, 55, "2025.01.01", 8)
+    # 画面構築（あけおめ）
+    if status or happy_timer:
+        pyxel.text(31, 13, "A HAPPY NEW YEAR!", 0)
+        pyxel.text(30, 12, "A HAPPY NEW YEAR!", 9)
+    # 画面構築（餌ゲット）
+    if (tutu_status or deli_timer) and (not status or not happy_timer):
+        pyxel.text(31, 13, "DELICIOUS!", 0)
+        pyxel.text(30, 12, "DELICIOUS!", 9)
+    # 餌リセット
+    if tutu_status:
+        set_spawn()
+    # 画面構築（スコアオン・オフ）
+    if isScore:
+        pyxel.text(84, 2, 'SCORE: ' + str(score).zfill(3), 7)
+    # 画面構築（自動プレイ）
+    if isAuto:
+        pyxel.text(81, 55, '.', 10)
+    # 画面構築（餌）
+    pyxel.text(tutu_x + 10, tutu_y + 6, ".", 4)
+
     return
 
 # Pyxelの関数（描画）
 def draw():
 
     if isClear:
-        pyxel.cls(1) # 画面のクリア
-        pyxel.text(10, 5, "THANK YOU FOR YOUR PLAYING.", 7)
-        pyxel.text(6, 16, "BEST WISHES FOR THE NEW YEAR!!", 0)
-        pyxel.text(5, 15, "BEST WISHES FOR THE NEW YEAR!!", 9)
-        pyxel.blt(58 + clear_cat_ajst, 23, 0, 0, 0, 16, 16, 1)
-        pyxel.blt(24, 44, 2, 0, 0, 16, 16, 1)
-        pyxel.blt(44, 44, 2, 16, 0, 16, 16, 1)
-        pyxel.blt(64, 44, 2, 32, 0, 16, 16, 1)
-        pyxel.blt(84, 44, 2, 48, 0, 16, 16, 1)
+        game_clear()
     else:
-        # 画面構築
-        pyxel.cls(bgcolor_list[clear_cnt]) # 画面のクリア
-        # 背景にアイテム追加
-        if score > 100:
-            pyxel.blt(item_point[0][0], item_point[0][1], 2, 0, 0, 16, 16, 1)
-        if score > 200:
-            pyxel.blt(item_point[1][0], item_point[1][1], 2, 16, 0, 16, 16, 1)
-        if score > 300:
-            pyxel.blt(item_point[2][0], item_point[2][1], 2, 32, 0, 16, 16, 1)
-        if score > 400:
-            pyxel.blt(item_point[3][0], item_point[3][1], 2, 48, 0, 16, 16, 1)
-        # ゴールの描画
-        pyxel.blt(5, 5, 1, 0, 0, 16, 16, 0) 
-        # 背景文字の描画（猫より後）
-        pyxel.text(11, 22, "^", 7)
-        pyxel.text(11, 24, "|", 7)
-        pyxel.text(6, 32, "LET'S      CAT", 7)
-        # 画面構築（猫）
-        pyxel.blt(x, y, 0, 0, 0, 16, 16, 1)
-        # 背景文字の描画（猫より前）
-        pyxel.text(6, 32, "      MOVE     HERE!", 7)
-        pyxel.text(84, 55, "2025.01.01", 8)
-        # 画面構築（あけおめ）
-        if status or happy_timer:
-            pyxel.text(31, 13, "A HAPPY NEW YEAR!", 0)
-            pyxel.text(30, 12, "A HAPPY NEW YEAR!", 9)
-        # 画面構築（餌ゲット）
-        if (tutu_status or deli_timer) and (not status or not happy_timer):
-            pyxel.text(31, 13, "DELICIOUS!", 0)
-            pyxel.text(30, 12, "DELICIOUS!", 9)
-        # 餌リセット
-        if tutu_status:
-            set_spawn()
-        # 画面構築（スコアオン・オフ）
-        if isScore:
-            pyxel.text(84, 2, 'SCORE: ' + str(score).zfill(3), 7)
-        # 画面構築（デバック情報オン・オフ）
-        if isHelp:
-            pyxel.text(1, 46, str(deli_timer) + ':' + str(happy_timer), 7)
-            pyxel.text(1, 55, str(x) + ':' + str(y) +  ':' + str(tutu_x) + ':' + str(tutu_y), 7)
-        # 画面構築（自動プレイ）
-        if isAuto:
-            pyxel.text(81, 55, '.', 10)
-        # 画面構築（餌）
-        pyxel.text(tutu_x + 10, tutu_y + 6, ".", 4)
+        play_game()
+
+    # 画面構築（デバック情報オン・オフ）
+    if isHelp:
+        pyxel.text(1, 46, str(deli_timer) + ':' + str(happy_timer) + ':' + str(isClear), 7)
+        pyxel.text(1, 55, str(x) + ':' + str(y) +  ':' + str(tutu_x) + ':' + str(tutu_y), 7)
 
     return
 
