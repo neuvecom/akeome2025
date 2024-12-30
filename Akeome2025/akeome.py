@@ -7,26 +7,6 @@
 
 import pyxel
 import random
-import platform
-import os
-import sys
-
-print('-----------------')
-print('title: Akeome2025')
-print('author: neuve project')
-print('site: https://github.com/neuvecom/akeome2025')
-print('license: MIT')
-print('version: 1.0')
-# print(platform.system()) # Darwin
-# print(os.name) # posix
-# print(sys.platform) # darwin
-# print(platform.release()) # 24.1.0
-# print(platform.version()) # Darwin Kernel Version 24.1.0: Thu Oct 10 21:03:11 PDT 2024; root:xnu-11215.41.3~2/RELEASE_ARM64_T6020
-# print(platform.platform()) # macOS-15.1.1-arm64-arm-64bit
-# print(platform.platform(terse=True)) # macOS-15.1.1
-# print(platform.platform(aliased=True)) # macOS-15.1.1-arm64-arm-64bit
-print('> GAME OPEN')
-print('-----------------')
 
 # 初期化
 myname = 'Akeome2025'
@@ -83,14 +63,19 @@ def auto_drive():
     global x,y,tutu_x,tutu_y
 
     axus = random.randint(0, 500) % 2
+
     if axus:
         if x > tutu_x:
             x = x - 1
+        elif x == tutu_x:
+            x = tutu_x
         else:
             x = x + 1
     else:
         if y > tutu_y:
             y = y - 1
+        elif y == tutu_y:
+            y = tutu_y
         else:
             y = y + 1
 
@@ -195,7 +180,7 @@ def game_clear():
 def play_game():
     # 画面構築
     pyxel.cls(bgcolor_list[clear_cnt]) # 画面のクリア
-    # 背景にアイテム追加
+    # 背景にアイテム追加(もっときれいに書きたい)
     if score > 100:
         pyxel.blt(item_point[0][0], item_point[0][1], 2, 0, 0, 16, 16, 1)
     if score > 200:
@@ -247,8 +232,8 @@ def draw():
 
     # 画面構築（デバック情報オン・オフ）
     if isHelp:
-        pyxel.text(1, 46, str(deli_timer) + ':' + str(happy_timer) + ':' + str(isClear), 7)
-        pyxel.text(1, 55, str(x) + ':' + str(y) +  ':' + str(tutu_x) + ':' + str(tutu_y), 7)
+        # pyxel.text(1, 46, str(deli_timer) + ':' + str(happy_timer) + ':' + str(isClear), 7)
+        pyxel.text(1, 55, str(x) + ':' + str(y) +  '=>' + str(tutu_x) + ':' + str(tutu_y), 7)
 
     return
 
