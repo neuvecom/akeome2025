@@ -153,7 +153,7 @@ def draw():
     pyxel.text(11, 24, "|", 7)
     pyxel.text(6, 32, "LET'S      CAT", 7)
     # 画面構築（猫）
-    pyxel.blt(x, y, 0, 0, 0, 16, 16)
+    pyxel.blt(x, y, 0, 0, 0, 16, 16, 1)
     # 画面構築（ベース上）
     pyxel.text(6, 32, "      MOVE     HERE!", 7)
     pyxel.text(84, 55, "2025.01.01", 8)
