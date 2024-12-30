@@ -55,9 +55,12 @@ isAuto = False
 # isDeli = False
 # isHappy = False
 
-deri_timer = 0
+deli_timer = 0
 happy_timer = 0
 time_val = 3 * 60
+clear_cnt = 0
+bgcolor_list = [1,3,5,11,13]
+random.shuffle(bgcolor_list)
 
 # デバッグ用情報をコンソールに出力
 print('BINGO is ' + str(tutu_x).zfill(3) + ':' + str(tutu_y).zfill(3))
@@ -95,13 +98,13 @@ def auto_drive():
 def update():
     global x,y,status,tutu_x,tutu_y,tutu_status
     global isSound,isHelp,isScore,isAuto
-    global score,deri_timer,happy_timer
+    global score,deli_timer,happy_timer,clear_cnt
 
     # 当たり判定（ゴール）
     if x == 5 and y == 5:
         status = True
         happy_timer = time_val
-        deri_timer = 0
+        deli_timer = 0
     else:
         status = False
     # 当たり判定（餌）
@@ -110,7 +113,11 @@ def update():
         if score < 1000:
             score = score + 1
             happy_timer = 0
-            deri_timer = int(time_val / 3)
+            deli_timer = int(time_val / 3)
+            if clear_cnt > 3:
+                clear_cnt = 0
+            else:
+                clear_cnt = clear_cnt + 1
         else:
             score = 0
     else:
@@ -159,8 +166,8 @@ def update():
     else:
         y = y
 
-    if deri_timer:
-        deri_timer = deri_timer - 1
+    if deli_timer:
+        deli_timer = deli_timer - 1
     
     if happy_timer:
         happy_timer = happy_timer - 1
@@ -171,7 +178,8 @@ def update():
 def draw():
 
     # 画面構築（ベース下）
-    pyxel.cls(1) # 画面のクリア
+    # pyxel.cls(1) # 画面のクリア
+    pyxel.cls(bgcolor_list[clear_cnt])
 
     # 背景にアイテム追加
     if score > 200:
@@ -183,7 +191,7 @@ def draw():
     if score > 800:
         pyxel.blt(item_point[3][0], item_point[3][1], 2, 48, 0, 16, 16, 1)
 
-    pyxel.blt(5, 5, 1, 0, 0, 16, 16) # ゴールの描画
+    pyxel.blt(5, 5, 1, 0, 0, 16, 16, 0) # ゴールの描画
     pyxel.text(11, 22, "^", 7)
     pyxel.text(11, 24, "|", 7)
     pyxel.text(6, 32, "LET'S      CAT", 7)
@@ -198,7 +206,7 @@ def draw():
         pyxel.text(30, 12, "A HAPPY NEW YEAR!", 9)
     
     # 画面構築（餌ゲット）
-    if (tutu_status or deri_timer) and (not status or not happy_timer):
+    if (tutu_status or deli_timer) and (not status or not happy_timer):
         pyxel.text(31, 13, "DELICIOUS!", 0)
         pyxel.text(30, 12, "DELICIOUS!", 9)
         
@@ -211,7 +219,7 @@ def draw():
         pyxel.text(84, 2, 'SCORE: ' + str(score).zfill(3), 13)
     # 画面構築（デバック情報オン・オフ）
     if isHelp:
-        pyxel.text(1, 46, str(deri_timer) + ':' + str(happy_timer), 13)
+        pyxel.text(1, 46, str(deli_timer) + ':' + str(happy_timer), 13)
         pyxel.text(1, 55, str(x) + ':' + str(y) +  ':' + str(tutu_x) + ':' + str(tutu_y), 13)
     # 画面構築（自動プレイ）
     if isAuto:
