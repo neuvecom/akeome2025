@@ -68,7 +68,7 @@ def set_spawn():
 def auto_drive():
     global x,y,tutu_x,tutu_y
 
-    axus = random.randint(0, 1)
+    axus = random.randint(0, 500) % 2
     if axus:
         if x > tutu_x:
             x = x - 1
