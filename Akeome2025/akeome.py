@@ -52,12 +52,18 @@ isSound = True
 isHelp = False
 isScore = False
 isAuto = False
+# isDeli = False
+# isHappy = False
+
+deri_timer = 0
+happy_timer = 0
+time_val = 3 * 60
 
 # デバッグ用情報をコンソールに出力
 print('BINGO is ' + str(tutu_x).zfill(3) + ':' + str(tutu_y).zfill(3))
 
 # 背景追加アイテムの出現ポイントの決定
-item_point = [[10,41],[37,41],[61,41],[105,8]]
+item_point = [[10,41],[37,41],[61,41],[98,24]]
 random.shuffle(item_point)
 print(item_point)
 
@@ -87,11 +93,15 @@ def auto_drive():
 
 # Pyxelの関数（更新）
 def update():
-    global x,y,status,tutu_x,tutu_y,tutu_status,isSound,isHelp,isScore,score,isAuto
+    global x,y,status,tutu_x,tutu_y,tutu_status
+    global isSound,isHelp,isScore,isAuto
+    global score,deri_timer,happy_timer
 
     # 当たり判定（ゴール）
     if x == 5 and y == 5:
         status = True
+        happy_timer = time_val
+        deri_timer = 0
     else:
         status = False
     # 当たり判定（餌）
@@ -99,6 +109,8 @@ def update():
         tutu_status = True
         if score < 1000:
             score = score + 1
+            happy_timer = 0
+            deri_timer = time_val / 3
         else:
             score = 0
     else:
@@ -147,6 +159,12 @@ def update():
     else:
         y = y
 
+    if deri_timer:
+        deri_timer = deri_timer - 1
+    
+    if happy_timer:
+        happy_timer = happy_timer - 1
+
     return
 
 # Pyxelの関数（描画）
@@ -175,20 +193,25 @@ def draw():
     pyxel.text(6, 32, "      MOVE     HERE!", 7)
     pyxel.text(84, 55, "2025.01.01", 8)
     # 画面構築（あけおめ）
-    if status:
+    if status or happy_timer:
         pyxel.text(31, 13, "A HAPPY NEW YEAR!", 0)
         pyxel.text(30, 12, "A HAPPY NEW YEAR!", 9)
+    
     # 画面構築（餌ゲット）
-    if tutu_status:
+    if (tutu_status or deri_timer) and (not status or not happy_timer):
         pyxel.text(31, 13, "DELICIOUS!", 0)
         pyxel.text(30, 12, "DELICIOUS!", 9)
+        
+    # 餌リセット
+    if tutu_status:
         set_spawn()
+    
     # 画面構築（スコアオン・オフ）
     if isScore:
         pyxel.text(84, 2, 'SCORE: ' + str(score).zfill(3), 13)
     # 画面構築（デバック情報オン・オフ）
     if isHelp:
-        pyxel.text(1, 55, str(x) + ':' + str(y) +  ':' + str(tutu_x) + ':' + str(tutu_y), 13)
+        pyxel.text(1, 55, str(x) + ':' + str(y) +  ':' + str(tutu_x) + ':' + str(tutu_y) + ':' + str(deri_timer) + ':' + str(happy_timer), 13)
     # 画面構築（自動プレイ）
     if isAuto:
         pyxel.text(81, 55, '.', 10)
