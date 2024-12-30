@@ -29,6 +29,8 @@ print('> GAME OPEN')
 print('-----------------')
 
 # 初期化
+myname = 'Akeome2025'
+my_resource = 'my_resource.pyxres'
 x_max = 128
 y_max = 64
 safe_ajst = 14
@@ -42,8 +44,8 @@ tutu_x = random.randint(safe_ajst, x_max - safe_ajst - 2)
 tutu_y = random.randint(safe_ajst, y_max - safe_ajst - 2)
 
 # ゲーム初期化
-pyxel.init(x_max,y_max,title='Akeome2025', display_scale=8)
-pyxel.load("my_resource.pyxres")
+pyxel.init(x_max,y_max,title=myname, display_scale=4)
+pyxel.load(my_resource)
 pyxel.playm(1, loop=True)
 
 isSound = True
@@ -51,7 +53,7 @@ isHelp = False
 isScore = False
 
 # デバッグ用情報をコンソールに出力
-print('BINGO is ' + str(tutu_x) + ':' + str(tutu_y))
+print('BINGO is ' + str(tutu_x).zfill(3) + ':' + str(tutu_y).zfill(3))
 
 # カスタム関数
 def set_spawn():
@@ -60,7 +62,7 @@ def set_spawn():
     tutu_x = random.randint(safe_ajst, x_max - safe_ajst - 2)
     tutu_y = random.randint(safe_ajst, y_max - safe_ajst - 2)
 
-    print('next BINGO is ' + str(tutu_x) + ':' + str(tutu_y))
+    print('next BINGO is ' + str(tutu_x).zfill(3) + ':' + str(tutu_y).zfill(3) + ' / Score: ' + str(score).zfill(3))
 
 # Pyxelの関数（更新）
 def update():
@@ -134,10 +136,10 @@ def draw():
         set_spawn()
     # 画面構築（スコアオン・オフ）
     if isScore:
-        pyxel.text(84, 2, 'SCORE: ' + str(score), 13)
+        pyxel.text(84, 2, 'SCORE: ' + str(score).zfill(3), 13)
     # 画面構築（デバック情報オン・オフ）
     if isHelp:
-        pyxel.text(1, 55, str(x) + ':' + str(y) +  ':' + str(tutu_x) + ':' + str(tutu_y) + ':' + str(tutu_status), 13)
+        pyxel.text(1, 55, str(x) + ':' + str(y) +  ':' + str(tutu_x) + ':' + str(tutu_y), 13)
     # 画面構築（餌）
     pyxel.text(tutu_x + 10, tutu_y + 6, ".", 4)
 
