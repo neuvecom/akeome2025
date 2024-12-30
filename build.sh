@@ -14,7 +14,7 @@ uv run pyxel app2html Akeome2025.pyxapp
 
 mv Akeome2025.html index.html
 
-cp inindex.html ../docs/
+cp index.html ../docs/
 
 cd ..
 pwd
