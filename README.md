@@ -2,7 +2,7 @@
 for New Year's Greetings.
 
 - [デモ](https://neuvecom.github.io/akeome2025/)
-- [解説記事](https://zenn.dev/neuvecom/articles/0ab7a54b5f2d97)
+- [（解説記事）Pyxelで「あけおめ」してみる](https://zenn.dev/neuvecom/articles/0ab7a54b5f2d97)
 
 ## はじめに
 このリポジトリは、上記リンクのあけおめ記事のソースコードです。  
